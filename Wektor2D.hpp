@@ -1,55 +1,61 @@
 #include <iostream>
-using namespace std;
 
-class Informer
+class Wektor2D
 {
 public:
-    Informer() { cout << "Utworzylem obiekt" << endl; }
-    ~Informer() { cout << "Zniszczylem obiekt" << endl; }
-};
-
-class wektor2D
-{
-public:
-    wektor2D(double a, double b)
+    Wektor2D() : x(0), y(0) {}
+    Wektor2D(double xx, double yy)
     {
-        x = a;
-        y = b;
-        print();
+        x = xx;
+        y = yy;
     }
 
-    ~wektor2D()
+    double getX()
     {
-        print();
-    }
-    double norm(double x, double y)
-    {
-        return sqrt(x * x + y * y);
-    }
-
-    void print()
-    {
-        cout << "Wspolrzedne wektora[ " << x << "," << y << "]" << endl;
-    }
-    void setX(int a) {
-        x = a;
-    }
-    void setY(int b) {
-        y = b;
-    }
-    double getX() {
         return x;
     }
-    double getY() {
+
+    double getY()
+    {
         return y;
     }
 
+    void   setX(double xx)
+    {
+        x = xx;
+    }
+
+    void   setY(double yy)
+    {
+        y = yy;
+    }
+
+
+    Wektor2D& operator=(const Wektor2D& W)
+    {
+        if (this != &W)
+        {
+            x = W.x;
+            y = W.y;
+        }
+        return *this;
+    }
+    Wektor2D& operator+(const Wektor2D& wek2)
+    {
+        Wektor2D* wek1 = new Wektor2D();
+        wek1->x = this->x + wek2.x;
+        wek1->y = this->y + wek2.y;
+        return *wek1;
+    }
+    double  operator*(const Wektor2D& wek2)
+    {
+        Wektor2D wek1;
+        wek1.x = this->x * wek2.x;
+        wek1.y = this->y * wek2.y;
+        double sum = wek1.x + wek1.y;
+        return sum;
+    }
 private:
     double x;
     double y;
-    Informer informator;
 };
-
-wektor2D operator+(wektor2D A, wektor2D B) {
-    return wektor2D{ A.getX() + B.getX(),A.getY() + B.getY() };
-}
